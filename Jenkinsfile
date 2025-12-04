@@ -1,6 +1,5 @@
 pipeline {
     agent any
- 
 
     stages {
 
@@ -10,13 +9,11 @@ pipeline {
             }
         }
 
-        stages {
         stage('Build') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn -B clean package'
             }
         }
-    }
 
         stage('Test') {
             steps {
@@ -33,6 +30,15 @@ pipeline {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
+        }
+    }
+
+    post {
+        success {
+            echo "Pipeline finished successfully!"
+        }
+        failure {
+            echo "Pipeline failed!"
         }
     }
 }
