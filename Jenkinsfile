@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven3'   // must match: Manage Jenkins → Global Tool Configuration
-        jdk 'JDK17'      // same here
-    }
-
     stages {
 
         stage('Checkout') {
@@ -35,15 +30,6 @@ pipeline {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
-        }
-    }
-
-    post {
-        success {
-            echo "Build Successful!"
-        }
-        failure {
-            echo "Build Failed!"
         }
     }
 }
